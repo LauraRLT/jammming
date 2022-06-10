@@ -1,11 +1,10 @@
-const clientId = '4bf57038006f4f2c871f0853dad7cf1c'
-const redirectUri = 'https://62a3b4ec19201b00092fa95f--laurarlt-jammming.netlify.app/'
-const spotifyUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
-
 let accessToken;
+const redirectUri = window.location.href
 
 const Spotify = {
     getAccessToken(){
+        const clientId = '4bf57038006f4f2c871f0853dad7cf1c'
+        const spotifyUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
         if(this.accessToken){
             return accessToken;
         }
