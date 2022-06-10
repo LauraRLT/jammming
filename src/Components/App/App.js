@@ -11,10 +11,9 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state= {
-      searchResults: [
-      ],
-      playlistTracks: [ 
-      ],
+      searchResults: [],
+      playlistTracks: [],
+      allResults: [],
       playlistName: "New Playlist"
     }
 
@@ -55,10 +54,11 @@ export default class App extends React.Component {
   savePlaylist() {
     const trackUris = this.state.playlistTracks.map(song => song.uri)
     Spotify.savePlayList(this.state.playlistName, trackUris)
-    this.setState({
+    this.setState(prevState =>({
       playlistName: "New Playlist",
-      playlistTracks: []
-    })
+      playlistTracks: [],
+      searchResults: prevState.allResults
+    }))
   }
 
   search(term) {
@@ -66,8 +66,9 @@ export default class App extends React.Component {
     if (this.state.playlistTracks.length !== 0) playlistIds = [...this.state.playlistTracks.id]
     console.log(playlistIds)
     Spotify.search(term)
-      .then(searchResults => this.setState(prevState=>({
-        searchResults: searchResults.filter(song => !playlistIds.includes(song.id))  
+      .then(searched => this.setState(prevState=>({
+        searchResults: searched.filter(song => !playlistIds.includes(song.id)),  
+        allResults: searched  
       })));
   }
 
