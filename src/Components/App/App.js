@@ -64,7 +64,6 @@ export default class App extends React.Component {
   search(term) {
     let playlistIds = [];
     if (this.state.playlistTracks.length !== 0) playlistIds = [...this.state.playlistTracks.id]
-    console.log(playlistIds)
     Spotify.search(term)
       .then(searched => this.setState(prevState=>({
         searchResults: searched.filter(song => !playlistIds.includes(song.id)),  
