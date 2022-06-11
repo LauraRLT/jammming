@@ -35,8 +35,7 @@ export default class Track extends React.Component {
     if(index < maxIndex) return ", "
   }
 
-  render() {  
-    console.log(this.unPackArtists())
+  render() {
     return (
         <div className="Track">
             <div className="Track-information">
