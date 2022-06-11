@@ -37,9 +37,15 @@ export default class App extends React.Component {
   }
 
   removeTrack(track){
+    let playlistIds = [];
+    if (this.state.playlistTracks.length > 1) {
+      playlistIds = [...this.state.playlistTracks.id]
+      playlistIds.pop(track.id)
+    }
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
       this.setState(prevState => ({
-        playlistTracks: prevState.playlistTracks.filter(song => song.id !== track.id)
+        playlistTracks: prevState.playlistTracks.filter(song => song.id !== track.id),
+        searchResults: prevState.allResults.filter(song => !playlistIds.includes(song.id))
       }));
     }
     else {
