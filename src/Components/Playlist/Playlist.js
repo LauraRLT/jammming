@@ -21,7 +21,7 @@ export default class Playlist extends React.Component {
   render() {  
     return (
         <div className="Playlist">
-          <label for="playListName" className='instructions'>Playlist Name</label>
+          <p className='instructions'>Playlist Name</p>
             <input id="playListName" value={this.props.playlistName} onChange={this.handleNameChange} onFocus={this.handleFocus}/>
                 <TrackList 
                   tracks={this.props.playlistTracks} 
