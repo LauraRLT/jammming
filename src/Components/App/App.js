@@ -38,8 +38,8 @@ export default class App extends React.Component {
 
   removeTrack(track){
     let playlistIds = [];
-    if (this.state.playlistTracks.length > 1) {
-      playlistIds = [...this.state.playlistTracks.id]
+    if (this.state.playlistTracks.length !== 0) {
+      playlistIds = this.state.playlistTracks.map(track => track.id)
       playlistIds.pop(track.id)
     }
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
@@ -69,7 +69,9 @@ export default class App extends React.Component {
 
   search(term) {
     let playlistIds = [];
-    if (this.state.playlistTracks.length !== 0) playlistIds = [...this.state.playlistTracks.id]
+    if (this.state.playlistTracks.length !== 0) {
+      playlistIds = this.state.playlistTracks.map(track => track.id)
+    }
     Spotify.search(term)
       .then(searched => this.setState(prevState=>({
         searchResults: searched.filter(song => !playlistIds.includes(song.id)),  
