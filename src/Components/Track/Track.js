@@ -28,7 +28,7 @@ export default class Track extends React.Component {
   unPackArtists() {
     let maxIndex = this.props.track.artists.length -1
     return this.props.track.artists.map((artist, index )=> 
-    <a href={artist.external_urls.spotify} target="_blank" rel="noreferrer noopener">{artist.name}{this.artistSpacing(index,maxIndex)}</a>)
+    <a href={artist.external_urls.spotify} target="_blank" rel="noreferrer noopener" key={`${this.props.track.id}${artist}${index}`}>{artist.name}{this.artistSpacing(index,maxIndex)}</a>)
   }
 
   artistSpacing(index, maxIndex) {
