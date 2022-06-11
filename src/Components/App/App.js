@@ -11,10 +11,9 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state= {
-      searchResults: [
-      ],
-      playlistTracks: [ 
-      ],
+      searchResults: [],
+      playlistTracks: [],
+      allResults: [],
       playlistName: "New Playlist"
     }
 
@@ -38,9 +37,15 @@ export default class App extends React.Component {
   }
 
   removeTrack(track){
+    let playlistIds = [];
+    if (this.state.playlistTracks.length !== 0) {
+      playlistIds = this.state.playlistTracks.map(track => track.id)
+      playlistIds.pop(track.id)
+    }
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
       this.setState(prevState => ({
-        playlistTracks: prevState.playlistTracks.filter(song => song.id !== track.id)
+        playlistTracks: prevState.playlistTracks.filter(song => song.id !== track.id),
+        searchResults: prevState.allResults.filter(song => !playlistIds.includes(song.id))
       }));
     }
     else {
@@ -55,23 +60,27 @@ export default class App extends React.Component {
   savePlaylist() {
     const trackUris = this.state.playlistTracks.map(song => song.uri)
     Spotify.savePlayList(this.state.playlistName, trackUris)
-    this.setState({
+    this.setState(prevState =>({
       playlistName: "New Playlist",
-      playlistTracks: []
-    })
+      playlistTracks: [],
+      searchResults: prevState.allResults
+    }))
   }
 
   search(term) {
     let playlistIds = [];
-    if (this.state.playlistTracks.length !== 0) playlistIds = [...this.state.playlistTracks.id]
-    console.log(playlistIds)
+    if (this.state.playlistTracks.length !== 0) {
+      playlistIds = this.state.playlistTracks.map(track => track.id)
+    }
     Spotify.search(term)
-      .then(searchResults => this.setState(prevState=>({
-        searchResults: searchResults.filter(song => !playlistIds.includes(song.id))  
+      .then(searched => this.setState(prevState=>({
+        searchResults: searched.filter(song => !playlistIds.includes(song.id)),  
+        allResults: searched  
       })));
   }
 
   render() {
+    Spotify.getAccessToken()
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
