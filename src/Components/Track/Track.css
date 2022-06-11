@@ -3,6 +3,11 @@
     align-items: center;
     border-bottom: 1px solid rgba(256, 256, 256, 0.8);
   }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
   
   .Track-action {
     cursor: pointer;
@@ -14,7 +19,7 @@
     color: #fff;
   }
   
-  .Track-action:hover {
+  .Track-action:hover, a:hover {
     color: rgba(265, 265, 265, .5);
   }
   
@@ -23,15 +28,20 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 72px;
+    min-height: 72px;
   }
   
   .Track-information h3 {
-    margin-bottom: .22rem;
+    margin: 0.22rem 0;
   }
   
   .Track-information p {
     font-size: .83rem;
     font-weight: 300;
     color: rgba(256, 256, 256, 0.8);
+    margin: 0.1rem 0;
+  }
+
+  audio {
+    margin: 0.4rem 0;
   }
