@@ -25,12 +25,27 @@ export default class Track extends React.Component {
     this.props.onRemove(this.props.track)
   }
 
+  unPackArtists() {
+    let maxIndex = this.props.track.artists.length -1
+    return this.props.track.artists.map((artist, index )=> 
+    <a href={artist.external_urls.spotify} target="_blank" rel="noreferrer noopener">{artist.name}{this.artistSpacing(index,maxIndex)}</a>)
+  }
+
+  artistSpacing(index, maxIndex) {
+    if(index < maxIndex) return ", "
+  }
+
   render() {  
+    console.log(this.unPackArtists())
     return (
         <div className="Track">
             <div className="Track-information">
-                <h3>{this.props.track.name}</h3>
-                <p>{this.props.track.artist} | {this.props.track.album}</p>
+              <a href={this.props.track.url} target="_blank" rel="noreferrer noopener"><h3>{this.props.track.name}</h3></a>
+                <p>{this.unPackArtists()} | <a href={this.props.track.albumUrl} target="_blank" rel="noreferrer noopener">{this.props.track.album}</a></p>
+                <audio
+                  controls
+                  src={this.props.track.preview} >
+                </audio>
             </div>
             {this.renderAction()}
         </div>

@@ -39,9 +39,12 @@ const Spotify = {
             return jsonResponse.tracks.items.map(track => ({
                 id: track.id,
                 name: track.name,
-                artist: track.artists[0].name,
+                artists: track.artists,
                 album: track.album.name,
-                uri: track.uri
+                uri: track.uri,
+                preview: track.preview_url,
+                url: track.external_urls.spotify,
+                albumUrl: track.album.external_urls.spotify,
             }))
         });           
     },
